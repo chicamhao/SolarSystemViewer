@@ -1,10 +1,12 @@
-//earth's scale
-var eScale = (1 / 510) * 0.00002;
+//size's scale
+const eScale = (1 / 510) * 0.00002;
+const diameterScale = 1000;
 
 //time's scale
-const tScale = 1000000;
+const defaultTimeScale = 1000000;
 const secInDay = 87600;
-var t1 = Date.now() / 1000;
+var tScale = defaultTimeScale;
+var t1 = Date.now() / diameterScale;
 
 var planets = [];
 var planetObjects = {};
@@ -29,7 +31,7 @@ function init(){
       "name" : planet.name,
       "theta" : 0,
       "dTheta" : (2 * Math.PI) / (planet.period_days * secInDay),
-      "diameter" : planet.diameter * eScale * 1000,
+      "diameter" : planet.diameter * eScale * diameterScale,
       "distance_KM" : planet.distance_KM * eScale,
       "period" : planet.period * tScale,
       "inclination" : planet.inclination * (Math.PI / 180),
@@ -90,8 +92,7 @@ function fillScene(){
     var targetGeometry = targetPath.createPointsGeometry(100);
 
     var targetTrajectory = new THREE.Line(targetGeometry, targetMaterial);
-    targetTrajectory.rotation.x = Math.PI / 2;
-    targetTrajectory.rotation.x += planet.inclination;
+    targetTrajectory.rotation.x += Math.PI / 2 + planet.inclination;
     scene.add( targetTrajectory );
     trajectories[planet.name] = targetTrajectory;
   });
@@ -124,26 +125,26 @@ function render() {
   if (Math.abs(planetObjects['earth'].rotation.y  % Math.PI, 0) < 0.01)
     sunLight.intensity = Math.random(0.5, 1);
 
-  // planet's movement
+  // planet's movement  
   planets.forEach(function (planet) {
 
-    planetObjects[planet.name].rotation.y += planet.rotation * 100;
+    planetObjects[planet.name].rotation.y += planet.rotation * diameterScale / 10;
+
     var dTheta = planet.dTheta * dT; 
     planet.theta += dTheta;
-    var phi = planet.inclination * Math.sin(planet.theta);
 
-    // coordinates of moon based on earth
+    // moon's movement based on earth
     if (planet.name == 'moon'){
       planetObjects[planet.name].position.z = planetObjects['earth'].position.z + planet.distance_KM * Math.sin(planet.theta);
       planetObjects[planet.name].position.x = planetObjects['earth'].position.x + planet.distance_KM * Math.cos(planet.theta);
+      planetObjects[planet.name].position.y = - planetObjects['earth'].position.y + planet.distance_KM * Math.sin(planet.theta) *  planet.inclination;
 
       return;
     }
 
-    // plane's coordinates based off theta + phi
     planetObjects[planet.name].position.z = planet.distance_KM * Math.sin(planet.theta);
     planetObjects[planet.name].position.x = planet.distance_KM * Math.cos(planet.theta);
-    planetObjects[planet.name].position.y = - planet.distance_KM * Math.cos((Math.PI / 2) - phi);
+    planetObjects[planet.name].position.y = - planet.distance_KM * Math.sin(planet.theta) *  planet.inclination;
   });
 
   renderer.render(scene, camera);
@@ -167,9 +168,19 @@ try {
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event){
   var keyCode = event.which;
+  console.log(keyCode);
   switch(keyCode){
+    case 187:
+      tScale *= 2;
+      break;
+    case 189:
+      tScale *= 0.5;
+      break;
+    case 220:
+      tScale = defaultTimeScale;
+        break;
     case 49:  
-      camera.lookAt(new THREE.Vector3(0, 0, 0));
+      camera.lookAt(0);
       break;
     case 50:
       camera.lookAt(planetObjects['earth'].position);
@@ -180,9 +191,23 @@ function onDocumentKeyDown(event){
     case 52:
       camera.lookAt(planetObjects['moon'].position);
       break;
-    default:
+    case 53:
+      camera.lookAt(planetObjects['jupiter'].position);
+      break;
+    case 54:
+      camera.lookAt(planetObjects['saturn'].position);
+      break;
+    case 55:
+      camera.lookAt(planetObjects['uranus'].position);
+      break;
+    case 56:
+      camera.lookAt(planetObjects['neptune'].position);
+      break;
+    case 57:
+      camera.lookAt(planetObjects['pluto'].position);
       break;
   }
 }
+
 
 // reference: https://mattloftus.github.io
