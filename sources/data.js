@@ -1,8 +1,7 @@
 var planetDatas = [
   {
     "name" : "mercury",
-    "distance_KM" : 57910000,
-    "distance_AU": 0.387,
+    "distance_to_sun" : 57910000,
     "diameter" : 4800,
     "period_days" : 88,
     "rotation_days" : 59,
@@ -10,8 +9,7 @@ var planetDatas = [
   },
   { 
     "name" : "venus",
-    "distance_KM" : 108200000,
-    "distance_AU" : 0.732,
+    "distance_to_sun" : 108200000,
     "diameter" : 12100,
     "period_days" : 225,
     "rotation_days" : 243,
@@ -19,8 +17,7 @@ var planetDatas = [
   },
   {
     "name": "earth",
-    "distance_KM" : 149600000,
-    "distance_AU" : 1,
+    "distance_to_sun" : 149600000,
     "diameter" : 12750,
     "period_days" : 365,
     "rotation_days" : 1,
@@ -28,8 +25,7 @@ var planetDatas = [
   },
   {
     "name" : "mars",
-    "distance_KM" : 227940000,
-    "distance_AU" : 1.524,
+    "distance_to_sun" : 227940000,
     "diameter" : 6800,
     "period_days" : 697,
     "rotation_days" : 1.017,
@@ -37,8 +33,7 @@ var planetDatas = [
   },
   {
     "name": "moon",
-    "distance_KM" : 14960000 + 3844000,
-    "distance_AU" : 1,
+    "distance_to_sun" : 14960000 + 3844000,
     "diameter" : 3475,
     "period_days" : 365,
     "rotation_days" : 30,
@@ -46,8 +41,7 @@ var planetDatas = [
   },
   {
     "name" : "jupiter",
-    "distance_KM" : 778330000,
-    "distance_AU" : 5.203,
+    "distance_to_sun" : 778330000,
     "diameter" : 142800,
     "period_days" : 4234,
     "rotation_days" : 0.417,
@@ -55,8 +49,7 @@ var planetDatas = [
   },
   {
     "name" : "saturn",
-    "distance_KM" : 1424600000,
-    "distance_AU" : 9.523,
+    "distance_to_sun" : 1424600000,
     "diameter" : 120660,
     "period_days" : 10752.9,
     "rotation_days" : 0.433,
@@ -64,8 +57,7 @@ var planetDatas = [
   },
   {
     "name" : "uranus",
-    "distance_KM" : 2873550000,
-    "distance_AU" : 19.208,
+    "distance_to_sun" : 2873550000,
     "diameter" : 51800,
     "period_days" : 30660,
     "rotation_days" : 0.708,
@@ -73,8 +65,7 @@ var planetDatas = [
   },
   {
     "name" : "neptune",
-    "distance_KM" : 4501000000,
-    "distance_AU" : 30.087,
+    "distance_to_sun" : 4501000000,
     "diameter" : 49500,
     "period_days" : 60225,
     "rotation_days" : 0.833,
@@ -82,8 +73,7 @@ var planetDatas = [
   },
   {
     "name" : "pluto",
-    "distance_KM" : 5945900000,
-    "distance_AU" : 39.746,
+    "distance_to_sun" : 5945900000,
     "diameter" : 3300,
     "period_days" : 90520,
     "rotation_days" : 6.4,

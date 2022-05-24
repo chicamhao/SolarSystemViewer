@@ -1,8 +1,8 @@
-//size's scale
-const eScale = (1 / 510) * 0.00002;
+//space's parameters
+const spaceScale = 1/25000000;
 const diameterScale = 1000;
 
-//time's scale
+//time's parameters
 const defaultTimeScale = 1000000;
 const secInDay = 87600;
 var tScale = defaultTimeScale;
@@ -31,8 +31,8 @@ function init(){
       "name" : planet.name,
       "theta" : 0,
       "dTheta" : (2 * Math.PI) / (planet.period_days * secInDay),
-      "diameter" : planet.diameter * eScale * diameterScale,
-      "distance_KM" : planet.distance_KM * eScale,
+      "diameter" : planet.diameter * spaceScale * diameterScale,
+      "distance_KM" : planet.distance_to_sun * spaceScale,
       "period" : planet.period * tScale,
       "inclination" : planet.inclination * (Math.PI / 180),
       "rotation" : (2 * Math.PI) / (planet.rotation_days * secInDay)
@@ -75,26 +75,26 @@ function fillScene(){
   var trajectories = {};
   planets.forEach(function (planet) {
     
-    var targetMaterial = new THREE.LineDashedMaterial({
+    var trajMaterial = new THREE.LineDashedMaterial({
         color: 0xfffff,
         transparent: true, 
         opacity: .4, 
         dashSize: 5,
         gapSize: 5
     });
-    var targetOrbit = new THREE.EllipseCurve(
+    var curve2D = new THREE.EllipseCurve(
       0,0,
       planet.distance_KM, planet.distance_KM, 
       0, 2.0 * Math.PI, 
       false);
-    var targetPath = new THREE.CurvePath(targetOrbit.getPoints(1000));
-    targetPath.add(targetOrbit);
-    var targetGeometry = targetPath.createPointsGeometry(100);
+    var curve3D = new THREE.CurvePath(curve2D.getPoints(1000));
+    curve3D.add(curve2D);
+    var trajGeometry = curve3D.createPointsGeometry(100);
 
-    var targetTrajectory = new THREE.Line(targetGeometry, targetMaterial);
-    targetTrajectory.rotation.x += Math.PI / 2 + planet.inclination;
-    scene.add( targetTrajectory );
-    trajectories[planet.name] = targetTrajectory;
+    var trajectory = new THREE.Line(trajGeometry, trajMaterial);
+    trajectory.rotation.x += Math.PI / 2 + planet.inclination;
+    scene.add( trajectory );
+    trajectories[planet.name] = trajectory;
   });
 
   // planets 
